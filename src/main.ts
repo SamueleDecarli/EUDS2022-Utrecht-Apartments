@@ -1,36 +1,30 @@
 
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import SceneLayer from "@arcgis/core/layers/SceneLayer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import SizeVariable from "@arcgis/core/renderers/visualVariables/SizeVariable";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import SceneView from "@arcgis/core/views/SceneView";
-import Map from "@arcgis/core/Map";
 import "@esri/calcite-components/dist/calcite/calcite.css";
 import "@esri/calcite-components/dist/components/calcite-button";
-import SceneLayer from "@arcgis/core/layers/SceneLayer";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 
-import IntegratedMeshLayer from "@arcgis/core/layers/IntegratedMeshLayer";
-import Home from "@arcgis/core/widgets/Home";
 import Basemap from "@arcgis/core/Basemap";
+import IntegratedMeshLayer from "@arcgis/core/layers/IntegratedMeshLayer";
 import PopupTemplate from "@arcgis/core/PopupTemplate";
+import Home from "@arcgis/core/widgets/Home";
 
 
-import * as colorRendererCreator from "@arcgis/core/smartMapping/renderers/color";
-import Legend from "@arcgis/core/widgets/Legend";
-import Expand from "@arcgis/core/widgets/Expand";
-import ColorStop from "@arcgis/core/renderers/visualVariables/support/ColorStop";
 import Color from "@arcgis/core/Color";
+import Collection from "@arcgis/core/core/Collection";
 import ClassBreaksRenderer from "@arcgis/core/renderers/ClassBreaksRenderer";
 import ColorVariable from "@arcgis/core/renderers/visualVariables/ColorVariable";
+import ColorStop from "@arcgis/core/renderers/visualVariables/support/ColorStop";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import { toEditorSettings } from "typescript";
-import Editor from "@arcgis/core/widgets/Editor";
-import SketchTooltipOptions from "@arcgis/core/views/interactive/sketch/SketchTooltipOptions";
 import WebScene from "@arcgis/core/WebScene";
-import Collection from "@arcgis/core/core/Collection";
+import Expand from "@arcgis/core/widgets/Expand";
+import Legend from "@arcgis/core/widgets/Legend";
 
 
 
@@ -46,7 +40,7 @@ import Collection from "@arcgis/core/core/Collection";
 const scene = new WebScene({
   portalItem: {
     // OSM 3D buildings and trees
-    id: "037cceb0e24440179dbd00846d2a8c4f",
+    id: "3ba7d9900bd7400f933684a9589a6a56",
   }
 });
 
@@ -79,20 +73,13 @@ scene.loadAll().then(() => {
 
   osmTrees = (scene.allLayers.find((layer) => {
     return layer.title === "OpenStreetMap 3D Trees"
-  }) as SceneLayer)
-  osmTrees.legendEnabled = false;
-
-  let hillshade = (scene.allLayers.find((layer) => {
-    return layer.title === "World Hillshade"
   }) as SceneLayer);
-  hillshade.visible = false;
+  osmTrees.legendEnabled = false;
 
   osmBuildings = (scene.allLayers.find((layer) => {
     return layer.title === "OpenStreetMap 3D Buildings"
-  }) as SceneLayer)
-
-
-  osmBuildings.legendEnabled = false,
+  }) as SceneLayer);
+  osmBuildings.legendEnabled = false;
   osmBuildings.excludeObjectIds = new Collection([22244537, 1062063544, 2372497640, 2777335364]);
 });
 
@@ -169,20 +156,7 @@ apartments.popupTemplate = new PopupTemplate({
 
 
 //***********************************
-//* Step 4: Editor
-//***********************************
-
-let editor = new Editor({
-  view: view,
-  tooltipOptions: new SketchTooltipOptions({
-    enabled: true
-  })
-});
-view.ui.add(new Expand({ view: view, group: "top-right", content: editor }), "top-right");
-
-
-//***********************************
-//* Step 5: Unique Value Renderer
+//* Step 4: Unique Value Renderer
 //***********************************
 
 let uniqueValueRenderer = new UniqueValueRenderer({
@@ -265,7 +239,7 @@ let uniqueValueRenderer = new UniqueValueRenderer({
 
 
 //***********************************
-//* Step 6: Extrusion
+//* Step 5: Extrusion
 //***********************************
 
 let rendererExtruded = new UniqueValueRenderer({
@@ -358,7 +332,7 @@ let rendererExtruded = new UniqueValueRenderer({
 
 
 //***********************************
-//* Step 7: Final app
+//* Step 6: Final app
 //***********************************
 
 const meshUtrecht = new IntegratedMeshLayer({
